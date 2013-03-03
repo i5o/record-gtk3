@@ -1,7 +1,7 @@
 [Activity]
 name = Record
 bundle_id = org.laptop.RecordActivity
-class = sugar-activity RecordActivity.Record
+exec = sugar-activity RecordActivity.Record
 icon = activity-record
 activity_version = 1
 show_launcher = yes

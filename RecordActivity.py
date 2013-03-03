@@ -23,7 +23,7 @@
 
 from gi.repository import Gtk
 from sugar3.graphics.toolbutton import ToolButton
-from sugar3.graphics.radiobutton import RadioToolButton
+from sugar3.graphics.radiotoolbutton import RadioToolButton
 from sugar3.graphics.toolbarbox import ToolbarBox
 from sugar3.activity.widgets import StopButton
 from sugar3.activity.widgets import ActivityToolbarButton
@@ -48,7 +48,6 @@ class Record(activity.Activity):
         
         # Buttons #
         self._photo = RadioToolButton()
-        self._photo.props.group = tool_group
         self._photo.props.icon_name = 'media-photo'
         self._photo.props.label = _('Photo')
 
