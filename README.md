@@ -1,4 +1,5 @@
-record_2013
+Record 2013
 ===========
 
-Rewrite of Record Activity - Sugar
+Re escritura de la actividad Grabar en Gtk3
+El código actual es muy desorganizado.
