@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#       activity.py
+#       RecordActivity.py
 #
 #       Copyright (C) 2013 Ignacio Rodríguez <ignacio@sugarlabs.org>
 #       Copyright (C) 2013 Flavio Danesse <fdanesse@activitycentral.com>
@@ -53,4 +53,3 @@ class Record(activity.Activity):
 
         self.set_toolbar_box(self.toolbox)
         self.show_all()
-
