@@ -23,6 +23,7 @@
 
 from gi.repository import Gtk
 from sugar3.graphics.toolbutton import ToolButton
+from sugar3.graphics.radiobutton import RadioToolButton
 from sugar3.graphics.toolbarbox import ToolbarBox
 from sugar3.activity.widgets import StopButton
 from sugar3.activity.widgets import ActivityToolbarButton
@@ -44,9 +45,30 @@ class Record(activity.Activity):
         separator.set_expand(True)
 
         stop = StopButton(self)
+        
+        # Buttons #
+        self._photo = RadioToolButton()
+        self._photo.props.group = tool_group
+        self._photo.props.icon_name = 'media-photo'
+        self._photo.props.label = _('Photo')
 
+        self._video = RadioToolButton()
+        self._video.props.group = self._photo
+        self._video.props.icon_name = 'media-video'
+        self._video.props.label = _('Video')
+
+        self._audio = RadioToolButton()
+        self._audio.props.group = self._photo
+        self._audio.props.icon_name = 'media-audio'
+        self._audio.props.label = _('Audio')
+        # End of Buttons #
 
         self.toolbar.insert(self.activitybutton, -1)
+
+        self.toolbar.insert(self._photo, -1)
+        self.toolbar.insert(self._video, -1)
+        self.toolbar.insert(self._audio, -1)
+
         self.toolbar.insert(Gtk.SeparatorToolItem(), -1)
         self.toolbar.insert(separator, -1)
         self.toolbar.insert(stop, -1)
