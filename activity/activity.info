@@ -1,0 +1,7 @@
+[Activity]
+name = Record
+bundle_id = org.laptop.RecordActivity
+class = activity.Record
+icon = activity-record
+activity_version = 1
+show_launcher = yes
