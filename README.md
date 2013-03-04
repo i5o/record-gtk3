@@ -2,4 +2,5 @@ Record 2013
 ===========
 
 Re escritura de la actividad Grabar en Gtk3
-El código actual es muy desorganizado.
+Estado: --> Toolbar 100% Creada
+TODO: Cámara, y fotos.
