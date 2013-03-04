@@ -78,6 +78,11 @@ class QualityCombo(Gtk.ComboBox):
     def __init__(self):
         super(QualityCombo, self).__init__()
         self._model = Gtk.ListStore(str)
+
+        self._render = Gtk.CellRendererText()
+        self.pack_start(self._render, True)
+        self.add_attribute(self._render, "text", 0)
+
         self._add(_("Low"))
         self.set_active(0)
 
@@ -88,7 +93,4 @@ class QualityCombo(Gtk.ComboBox):
         self.show_all()
 
     def _add(self, text):
-        self._render = Gtk.CellRendererText()
         self._model.append([text])
-        self.pack_start(self._render, True)
-        self.add_attribute(self._render, "text", 0)
