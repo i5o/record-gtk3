@@ -22,13 +22,25 @@
 #       MA 02110-1301, USA.
 
 from gi.repository import Gtk
-from sugar3.graphics.toolbutton import ToolButton
+
 from sugar3.graphics.radiotoolbutton import RadioToolButton
-from sugar3.graphics.toolbarbox import ToolbarBox
+from sugar3.graphics.toolbarbox import ToolbarButton
 from sugar3.activity.widgets import StopButton
 from sugar3.activity.widgets import ActivityToolbarButton
-from gettext import gettext as _
+
+from sugar3.graphics.toolbarbox import ToolbarBox
+from sugar3.graphics.toolcombobox import ToolComboBox
+
+from sugar3.graphics.combobox import ComboBox
+
 from sugar3.activity import activity
+
+from gettext import gettext as _
+
+from combos import DurationCombo
+from combos import TimerCombo
+from combos import QualityCombo
+
 
 
 class Record(activity.Activity):
@@ -62,6 +74,19 @@ class Record(activity.Activity):
         self._audio.props.label = _('Audio')
         # End of Buttons #
 
+        self._timer = TimerCombo()
+        self._timer_2 = DurationCombo()
+
+        self._preferencias = ToolbarButton()
+        self._preferencias.set_page(self._make_config_toolbar())
+        self._preferencias.props.icon_name = 'preferences-system'
+        self._preferencias.props.label = _('Preferences')
+
+
+        self._photo.connect("clicked", self._click, "Photo")
+        self._video.connect("clicked", self._click, "Video")
+        self._video.connect("clicked", self._click, "Audio")
+
         self.toolbar.insert(self.activitybutton, -1)
 
         self.toolbar.insert(self._photo, -1)
@@ -69,8 +94,38 @@ class Record(activity.Activity):
         self.toolbar.insert(self._audio, -1)
 
         self.toolbar.insert(Gtk.SeparatorToolItem(), -1)
+
+        self.toolbar.insert(self._timer, -1)
+        self.toolbar.insert(self._timer_2, -1)
+        self.toolbar.insert(self._preferencias, -1)
+
         self.toolbar.insert(separator, -1)
         self.toolbar.insert(stop, -1)
 
         self.set_toolbar_box(self.toolbox)
         self.show_all()
+
+
+    def _click(self, widget, mode):       
+        for widget in self._timer_2:
+            if mode == "Video" or mode == "Audio":
+                widget.set_sensitive(True)
+            else:
+                widget.set_sensitive(False)
+            widget.show_all()
+
+        if mode == "Video":
+            self.calidad.combo.set_sensitive(True)
+        else:
+            self.calidad.combo.set_sensitive(False)
+
+    def _make_config_toolbar(self):
+        toolbar = Gtk.Toolbar()
+        combo = QualityCombo()
+        self.calidad = ToolComboBox(combo=combo, label_text=_('Quality:'))
+        self.calidad.show_all()
+        
+        toolbar.insert(self.calidad, -1)
+        toolbar.show_all()
+        return toolbar       
+
