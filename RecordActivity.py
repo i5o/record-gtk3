@@ -76,6 +76,7 @@ class Record(activity.Activity):
 
         self._timer = TimerCombo()
         self._timer_2 = DurationCombo()
+        self._timer_2.combo.set_sensitive(False)
 
         self._preferencias = ToolbarButton()
         self._preferencias.set_page(self._make_config_toolbar())
@@ -122,6 +123,7 @@ class Record(activity.Activity):
     def _make_config_toolbar(self):
         toolbar = Gtk.Toolbar()
         combo = QualityCombo()
+        combo.set_sensitive(False)
         self.calidad = ToolComboBox(combo=combo, label_text=_('Quality:'))
         self.calidad.show_all()
         
