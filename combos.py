@@ -20,8 +20,13 @@
 #       Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #       MA 02110-1301, USA.
 
+from gi.repository import Gtk
+
 from gettext import gettext as _
 from IconCombo import IconComboBox
+
+import hw
+
 
 class TimerCombo(IconComboBox):
     TIMERS = (0, 5, 10)
@@ -66,3 +71,26 @@ class DurationCombo(IconComboBox):
 
     def set_value_idx(self, idx):
         self.combo.set_active(idx)
+
+
+
+class QualityCombo(Gtk.ComboBox):
+    
+    def __init__(self):
+        super(QualityCombo, self).__init__()
+        self._model = Gtk.ListStore(str)
+        self._add(_("Low"))
+        self.set_active(0)
+
+        if hw.get_xo_version() != 1:
+            self._add(_('High'))
+
+        self.set_model(self._model)
+        self.show_all()
+
+    def _add(self, text):
+        self._render = Gtk.CellRendererText()
+        self._model.append([text])
+        self.pack_start(self._render, True)
+        self.add_attribute(self._render, "text", 0)
+
