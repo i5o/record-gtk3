@@ -85,7 +85,7 @@ class Record(activity.Activity):
 
         self._photo.connect("clicked", self._click, "Photo")
         self._video.connect("clicked", self._click, "Video")
-        self._video.connect("clicked", self._click, "Audio")
+        self._audio.connect("clicked", self._click, "Audio")
 
         self.toolbar.insert(self.activitybutton, -1)
 
