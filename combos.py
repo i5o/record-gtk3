@@ -33,7 +33,7 @@ class TimerCombo(IconComboBox):
 
     def __init__(self):
         super(TimerCombo, self).__init__('timer')
-        
+
         for i in self.TIMERS:
             if i == 0:
                 self.append_item(i, _('Immediate'))
@@ -73,9 +73,8 @@ class DurationCombo(IconComboBox):
         self.combo.set_active(idx)
 
 
-
 class QualityCombo(Gtk.ComboBox):
-    
+
     def __init__(self):
         super(QualityCombo, self).__init__()
         self._model = Gtk.ListStore(str)
@@ -93,4 +92,3 @@ class QualityCombo(Gtk.ComboBox):
         self._model.append([text])
         self.pack_start(self._render, True)
         self.add_attribute(self._render, "text", 0)
-

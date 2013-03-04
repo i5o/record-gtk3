@@ -31,7 +31,6 @@ from sugar3.activity.widgets import ActivityToolbarButton
 from sugar3.graphics.toolbarbox import ToolbarBox
 from sugar3.graphics.toolcombobox import ToolComboBox
 
-from sugar3.graphics.combobox import ComboBox
 
 from sugar3.activity import activity
 
@@ -40,7 +39,6 @@ from gettext import gettext as _
 from combos import DurationCombo
 from combos import TimerCombo
 from combos import QualityCombo
-
 
 
 class Record(activity.Activity):
@@ -57,7 +55,7 @@ class Record(activity.Activity):
         separator.set_expand(True)
 
         stop = StopButton(self)
-        
+
         # Buttons #
         self._photo = RadioToolButton()
         self._photo.props.icon_name = 'media-photo'
@@ -83,7 +81,6 @@ class Record(activity.Activity):
         self._preferencias.props.icon_name = 'preferences-system'
         self._preferencias.props.label = _('Preferences')
 
-
         self._photo.connect("clicked", self._click, "Photo")
         self._video.connect("clicked", self._click, "Video")
         self._audio.connect("clicked", self._click, "Audio")
@@ -106,8 +103,7 @@ class Record(activity.Activity):
         self.set_toolbar_box(self.toolbox)
         self.show_all()
 
-
-    def _click(self, widget, mode):       
+    def _click(self, widget, mode):
         for widget in self._timer_2:
             if mode == "Video" or mode == "Audio":
                 widget.set_sensitive(True)
@@ -126,8 +122,6 @@ class Record(activity.Activity):
         combo.set_sensitive(False)
         self.calidad = ToolComboBox(combo=combo, label_text=_('Quality:'))
         self.calidad.show_all()
-        
         toolbar.insert(self.calidad, -1)
         toolbar.show_all()
-        return toolbar       
-
+        return toolbar

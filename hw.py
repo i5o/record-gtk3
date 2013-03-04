@@ -22,12 +22,14 @@
 
 import os
 
+
 def _get_dmi(node):
     path = os.path.join('/sys/class/dmi/id', node)
     try:
         return open(path).readline().strip()
     except:
         return None
+
 
 def get_xo_version():
     if _get_dmi('product_name') != 'XO':

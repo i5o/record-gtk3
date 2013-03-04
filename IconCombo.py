@@ -24,6 +24,7 @@ from gi.repository import Gtk
 from sugar3.graphics.combobox import ComboBox
 from sugar3.graphics import style
 
+
 class IconComboBox(Gtk.ToolItem):
     def __init__(self, icon_name, **kwargs):
         Gtk.ToolItem.__init__(self, **kwargs)
