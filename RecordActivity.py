@@ -21,9 +21,13 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
+import os
+
 from gettext import gettext as _
 
 from gi.repository import Gtk
+from gi.repository import Gdk
+from gi.repository import GObject
 
 from sugar3.graphics.radiotoolbutton import RadioToolButton
 from sugar3.graphics.toolbarbox import ToolbarButton
@@ -36,7 +40,22 @@ from sugar3.activity import activity
 from Widgets import DurationCombo
 from Widgets import TimerCombo
 from Widgets import QualityCombo
+from Widgets import View
+from Widgets import Tray
 
+BASE = os.path.dirname(__file__)
+
+screen = Gdk.Screen.get_default()
+css_provider = Gtk.CssProvider()
+style_path = os.path.join(BASE, "RecordStyle.css")
+css_provider.load_from_path(style_path)
+context = Gtk.StyleContext()
+
+context.add_provider_for_screen(
+    screen,
+    css_provider,
+    Gtk.STYLE_PROVIDER_PRIORITY_USER)
+    
 class Record(activity.Activity):
     
     def __init__(self, handle):
@@ -56,7 +75,11 @@ class Record(activity.Activity):
         
         self._preferencias = None
         
+        self.view = None
+        self.tray = None
+        
         self._set_toolbar()
+        self._set_canvas()
         
         self.show_all()
         
@@ -64,6 +87,18 @@ class Record(activity.Activity):
         #self._video.connect("clicked", self._click, "Video")
         #self._audio.connect("clicked", self._click, "Audio")
 
+    def _set_canvas(self):
+        
+        basebox = Gtk.Box(orientation = Gtk.Orientation.VERTICAL)
+        
+        self.view = View()
+        self.tray = Tray()
+        
+        basebox.pack_start(self.view, True, True, 0)
+        basebox.pack_start(self.tray, False, False, 0)
+        
+        self.set_canvas(basebox)
+        
     def _set_toolbar(self):
         
         separator = Gtk.SeparatorToolItem()

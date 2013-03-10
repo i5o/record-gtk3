@@ -24,9 +24,13 @@
 from gettext import gettext as _
 
 from gi.repository import Gtk
+from gi.repository import Gdk
+from gi.repository import GObject
 
+import sugar3
 from sugar3.graphics.combobox import ComboBox
 from sugar3.graphics import style
+from sugar3.graphics.icon import Icon
 
 class IconComboBox(Gtk.ToolItem):
     
@@ -123,4 +127,92 @@ class QualityCombo(Gtk.ComboBox):
     def _add(self, text):
         
         self._model.append([text])
+        
+class View(Gtk.DrawingArea):
+    
+    __gtype_name__ = 'Visor'
+    
+    def __init__(self):
+        
+        Gtk.DrawingArea.__init__(self)
+        
+        self.add_events(
+            Gdk.EventMask.KEY_PRESS_MASK |
+            Gdk.EventMask.KEY_RELEASE_MASK |
+            Gdk.EventMask.POINTER_MOTION_MASK |
+            Gdk.EventMask.POINTER_MOTION_HINT_MASK |
+            Gdk.EventMask.BUTTON_MOTION_MASK |
+            Gdk.EventMask.BUTTON_PRESS_MASK |
+            Gdk.EventMask.BUTTON_RELEASE_MASK
+        )
+        
+        self.show_all()
+        
+class Tray(Gtk.Box):
+    
+    def __init__(self):
+        
+        Gtk.Box.__init__(self, orientation = Gtk.Orientation.HORIZONTAL)
+        
+        self.set_size_request(-1, 150)
+        
+        scroll_left = TrayScrollButton('go-left')
+        self.pack_start(scroll_left, False, False, 0)
+
+        '''
+        scroll = Gtk.ScrolledWindow()
+        
+        scroll.set_policy(
+            Gtk.PolicyType.AUTOMATIC,
+            Gtk.PolicyType.NEVER)'''
+        
+        toolbar = Gtk.Toolbar(orientation = Gtk.Orientation.HORIZONTAL)
+        toolbar.set_show_arrow(False)
+        toolbar.set_size_request(500, -1)
+        toolbar.show()
+        
+        scroll = Gtk.Viewport()
+        scroll.set_shadow_type(Gtk.ShadowType.NONE)
+        
+        scroll.add(toolbar)
+        #scroll.add_with_viewport(toolbar)
+        
+        self.pack_start(scroll, True, False, 0)
+        
+        scroll_right = TrayScrollButton('go-right')
+        self.pack_end(scroll_right, False, False, 0)
+        
+        self.show_all()
+        
+class TrayScrollButton(Gtk.Button):
+    
+    def __init__(self, icon_name):
+        
+        Gtk.Button.__init__(self)
+        
+        self.modify_bg(
+            Gtk.StateType.NORMAL,
+            style.COLOR_TOOLBAR_GREY.get_gdk_color())
+            
+        self.modify_bg(
+            Gtk.StateType.ACTIVE,
+            style.COLOR_BUTTON_GREY.get_gdk_color())
+            
+        self.set_relief(Gtk.ReliefStyle.NONE)
+        
+        self.set_size_request(
+            style.GRID_CELL_SIZE,
+            style.GRID_CELL_SIZE)
+
+        icon = Icon(
+            icon_name = icon_name,
+            icon_size = Gtk.IconSize.SMALL_TOOLBAR)
+            
+        self.set_image(icon)
+        
+        icon.show()
+        
+        self.show_all()
+        
+        #self.connect('clicked', self._clicked_cb)
         
